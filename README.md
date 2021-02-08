@@ -1,16 +1,7 @@
-# soundsaga
+# SoundSaga
 
-A new Flutter project.
+A little app in Flutter that allows you to discover music made exactly 10, 20, 30, 40, 50 or 60 years ago! When complete, it will use the Discogs API to get information about tracks on historic editions of the Billboard Hot 100, serving as a snapshot of an era.
 
-## Getting Started
+## Current state
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Currently, the app does not produce any output; the API connection is being worked on.
