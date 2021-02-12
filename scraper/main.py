@@ -13,7 +13,7 @@ P  = '\033[35m' # purple
 
 fileStart = ""
 fileEnd = ".json"
-chartDate = date(1970, 1, 1)
+chartDate = date(1970, 2, 6)
 numTracks = 100
 print("Starting.")
 database = {}
