@@ -4,4 +4,6 @@ A little app in Flutter that allows you to discover music made exactly 10, 20, 3
 
 ## Current state
 
-Currently, the app does not produce any output; the API connection is being worked on.
+Currently, the app does connects to the Discogs API on button press, fetches information on a track, and shows the album art and title.
+
+This shows that the API connection works. However, the UI has yet to be added.
