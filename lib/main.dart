@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soundsaga/track.dart';
 
@@ -28,12 +29,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Track _track = new Track("3766509");
+  DateTime _chartDate = DateTime.utc(1979,06,03);
 
   void _buttonPress() {
     setState(() {
       _track.load();
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: <Widget>[
           Text(_track.trackName),
-          _track.img
+          _track.img,
         ]
       ),
       floatingActionButton: FloatingActionButton(
