@@ -22,14 +22,14 @@ class Track {
     load();
   }
   void load() async {
-    responseBody = await Metadata.fetchTrack(id);
+    responseBody = await DiscogsMetadata.fetchTrack(id);
     Map<String, dynamic> map = json.decode(responseBody);
     trackName = map["title"];
     img = Image(image: NetworkImage(map["images"][0]["uri"]));
   }
 }
 
-class Metadata {
+class DiscogsMetadata {
   static String url = 'https://api.discogs.com/releases/';
   
   static Future<String> fetchTrack(String id) async {
