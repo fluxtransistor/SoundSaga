@@ -17,11 +17,8 @@ void main() async {
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return CupertinoApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
       home: MyHomePage(title: 'Sound Saga'),
     );
   }
@@ -48,23 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Column(
-        children: <Widget>[
-          Text(_track.trackName),
-          _track.img,
-        ]
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _buttonPress,
-        tooltip: 'Fetch',
-        child: Icon(Icons.cloud_download),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    return Container();
   }
 }
