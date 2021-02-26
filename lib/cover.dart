@@ -83,7 +83,7 @@ Widget legacyStack() {
               child: DecoratedBox(
                 child:
                 ClipRRect(child:
-                  imageShader(Image(image: AssetImage("assets/dsotm.jpg"))),
+                  imageShader(Image(image: AssetImage("assets/life.jpeg"))),
                   borderRadius: BorderRadius.all(Radius.circular(5)),),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 127, 127, 127),
