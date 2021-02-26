@@ -65,35 +65,83 @@ class _MainScreenState extends State<MainScreen> {
 class SingleRecordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return new Stack(
+      children: <Widget>[
+      Center(
       child:
-        Transform.rotate(angle: 0.04,
+        Transform.rotate(angle: 0.08,
         child:
           SizedBox(
           width: 280.00,
           height: 280.00,
-          child: const DecoratedBox(
+          child: DecoratedBox(
             decoration: const BoxDecoration(
-              color: Colors.black26,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)
-              ),
+              color: Colors.grey,
+              borderRadius: BorderRadius.all(Radius.circular(5)),
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromRGBO(0,0,0, 0.5),
+                  color: Color.fromRGBO(0,0,0, 0.1),
                   spreadRadius: 1,
-                  blurRadius: 20,
-                  offset: Offset(3, 3), // changes position of shadow
+                  blurRadius: 8,
+                  offset: Offset(0, 0), // changes position of shadow
                 ),
               ],
             ),
-            // Put Your Child widget here.
           ),
           ),
         ),
+      ),
+        Center(
+          child:
+          Transform.rotate(angle: 0.01,
+            child:
+            SizedBox(
+              width: 280.00,
+              height: 280.00,
+              child: const DecoratedBox(
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(0,0,0, 0.5),
+                      spreadRadius: 1,
+                      blurRadius: 8,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Center(
+          child:
+          Transform.rotate(angle: -0.06,
+            child:
+            SizedBox(
+              width: 280.00,
+              height: 280.00,
+              child: const DecoratedBox(
+                child:
+                    ClipRRect(child: Image(image: AssetImage('assets/dsotm.jpg')), borderRadius: BorderRadius.all(Radius.circular(5)),),
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(0,0,0, 0.5),
+                      spreadRadius: 1,
+                      blurRadius: 8,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ]
     );
   }
 }

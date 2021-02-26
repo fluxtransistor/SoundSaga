@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   http:
   flutter_statusbarcolor:
+  palette_generator:
   cupertino_icons: ^1.0.1
 
 dev_dependencies:
