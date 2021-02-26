@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 ShaderMask imageShader(Image image) {
   return ShaderMask(
     child: image,
-    blendMode: BlendMode.multiply,
+    blendMode: BlendMode.screen,
     shaderCallback: (Rect bounds) {
       return RadialGradient(
         center: Alignment.bottomRight,
         radius: 1.5,
-        colors: [Color(0xFF0000FF),Color(0x0000FF00)],
+        colors: [Color(0x00000000),Color(0xFFFFFFFF)],
         stops: [
           0.0,
           1.0,
