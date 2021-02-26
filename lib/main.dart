@@ -1,12 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soundsaga/track.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+
+  try {
+    await FlutterStatusbarcolor.setStatusBarColor(Colors.black);
+  }  catch (e) {
+    print(e);
+  }
+
+  runApp(MainApp());
 }
 
-class MyApp extends StatelessWidget {
+class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
