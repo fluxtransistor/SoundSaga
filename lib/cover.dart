@@ -2,6 +2,26 @@ import 'package:flutter/cupertino.dart';
 
 // Widget coverStack(Track[] tracks)
 
+ShaderMask imageShader(Image image) {
+  return ShaderMask(
+    child: image,
+    blendMode: BlendMode.multiply,
+    shaderCallback: (Rect bounds) {
+      return RadialGradient(
+        center: Alignment.bottomRight,
+        radius: 1.5,
+        colors: [Color(0xFF0000FF),Color(0x0000FF00)],
+        stops: [
+          0.0,
+          1.0,
+        ],
+        tileMode: TileMode.mirror,
+      ).createShader(bounds);
+    },
+  );
+}
+
+
 Widget legacyStack() {
   return new Stack(
       children: <Widget>[
@@ -60,9 +80,10 @@ Widget legacyStack() {
             SizedBox(
               width: 280.00,
               height: 280.00,
-              child: const DecoratedBox(
+              child: DecoratedBox(
                 child:
-                ClipRRect(child: Image(image: AssetImage('assets/dsotm.jpg')),
+                ClipRRect(child:
+                  imageShader(Image(image: AssetImage("assets/dsotm.jpg"))),
                   borderRadius: BorderRadius.all(Radius.circular(5)),),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 127, 127, 127),
