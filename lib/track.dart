@@ -1,9 +1,7 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'dart:convert';
 
 final String authHeader = "Discogs key=MFmrWQujZMHvnzKzFclH, secret=bKQuEuBxsMuhtTnSBuxwndDavzzKVINX";
