@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:soundsaga/pages.dart';
+import 'package:soundsaga/pages/records/records.dart';
+import 'package:soundsaga/pages/list.dart';
+import 'package:soundsaga/pages/settings.dart';
 
 void main() async {
   runApp(MainApp());
