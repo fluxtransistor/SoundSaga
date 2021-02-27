@@ -1,16 +1,46 @@
 import 'package:flutter/cupertino.dart';
+import 'package:soundsaga/track.dart';
 
-// Widget coverStack(Track[] tracks)
+class CoverStack extends StatefulWidget{
+  @override
+  _CoverStackState createState() => _CoverStackState();
+}
+
+class _CoverStackState extends State<CoverStack> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
+}
 
 ShaderMask imageShader(Image image) {
   return ShaderMask(
-    child: image,
-    blendMode: BlendMode.screen,
+    child:
+      ShaderMask(
+      child: image,
+      blendMode: BlendMode.screen,
+      shaderCallback: (Rect bounds) {
+        return RadialGradient(
+          center: Alignment.bottomRight,
+          radius: 1.414,
+          colors: [Color.fromARGB(255, 0,0,0),Color.fromARGB(255, 127,127,127),Color.fromARGB(255,180,180,180)],
+          stops: [
+            0.0,
+            0.8,
+            1.0,
+          ],
+          tileMode: TileMode.mirror,
+        ).createShader(bounds);
+      },
+      ),
+    blendMode: BlendMode.multiply,
     shaderCallback: (Rect bounds) {
       return RadialGradient(
         center: Alignment.bottomRight,
-        radius: 1.5,
-        colors: [Color(0x00000000),Color(0xFFFFFFFF)],
+        radius: 1.414,
+        colors: [Color.fromARGB(127, 0,0,0),Color.fromARGB(0,255,255,255)],
         stops: [
           0.0,
           1.0,
@@ -22,12 +52,11 @@ ShaderMask imageShader(Image image) {
 }
 
 
+
 Widget legacyStack() {
-  return new Stack(
+  return new Container( child: Stack(
       children: <Widget>[
-        Center(
-          child:
-          Transform.rotate(angle: 0.08,
+        Transform.rotate(angle: 0.08,
             child:
             SizedBox(
               width: 280.00,
@@ -48,9 +77,6 @@ Widget legacyStack() {
               ),
             ),
           ),
-        ),
-        Center(
-          child:
           Transform.rotate(angle: 0.01,
             child:
             SizedBox(
@@ -72,9 +98,6 @@ Widget legacyStack() {
               ),
             ),
           ),
-        ),
-        Center(
-          child:
           Transform.rotate(angle: -0.06,
             child:
             SizedBox(
@@ -100,7 +123,6 @@ Widget legacyStack() {
               ),
             ),
           ),
-        ),
       ]
-  );
+  ));
 }
