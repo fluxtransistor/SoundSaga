@@ -1,35 +1,48 @@
 import 'dart:collection';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-final String authHeader = "Discogs key=MFmrWQujZMHvnzKzFclH, secret=bKQuEuBxsMuhtTnSBuxwndDavzzKVINX";
-final String userAgent = "SoundSaga/0.1 +http://github.com/fluxtransistor/SoundSaga";
+final String authHeader =
+    "Discogs key=MFmrWQujZMHvnzKzFclH, secret=bKQuEuBxsMuhtTnSBuxwndDavzzKVINX";
+final String userAgent =
+    "SoundSaga/0.1 +http://github.com/fluxtransistor/SoundSaga";
+
+class NullTrack extends Track {
+  @override
+  NullTrack() : super('');
+  String name = "Loading";
+  String artist = "Loading";
+  Image img = Image(image: AssetImage("assets/life.jpg"));
+}
 
 class Track {
   String responseBody;
   Map<String, dynamic> map;
-  String trackName;
+  String name;
   String id;
   Image img;
+
   Track(String idInput) {
     id = idInput;
-    trackName = "Loading...";
+    name = "Loading...";
     img = Image(image: AssetImage("assets/dsotm.jpg"));
     load();
   }
+
   void load() async {
     responseBody = await DiscogsMetadata.fetchTrack(id);
     Map<String, dynamic> map = json.decode(responseBody);
-    trackName = map["title"];
+    name = map["title"];
     img = Image(image: NetworkImage(map["images"][0]["uri"]));
   }
 }
 
 class DiscogsMetadata {
   static String url = 'https://api.discogs.com/releases/';
-  
+
   static Future<String> fetchTrack(String id) async {
     Map<String, String> headers = new HashMap();
     headers['Accept'] = 'application/json';
