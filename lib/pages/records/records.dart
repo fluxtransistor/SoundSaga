@@ -14,6 +14,7 @@ class _SingleRecordPageState extends State<SingleRecordPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [
           legacyStack(),
           CupertinoButton.filled(
