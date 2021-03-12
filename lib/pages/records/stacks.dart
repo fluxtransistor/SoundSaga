@@ -26,7 +26,7 @@ class _CoverStackState extends State<CoverStack> {
             Cover(
               rotation: rotation,
               track: widget.tracks[i],
-              brightness: 1/((i+1)^2),
+              brightness: 1/(2*(i)+1),
             )
         )
       );
