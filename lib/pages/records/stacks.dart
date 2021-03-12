@@ -1,31 +1,59 @@
 import 'package:flutter/cupertino.dart';
 import 'package:soundsaga/track.dart';
 
-// ignore: must_be_immutable
+class CoverStackController {
+  void Function() next;
+}
+
 class CoverStack extends StatefulWidget {
-  var tracks = <Track> [];
-  CoverStack({@required this.tracks});
+  final tracks;
+  final CoverStackController controller;
+  CoverStack({@required this.tracks, this.controller});
   @override
-  _CoverStackState createState() => _CoverStackState();
+  _CoverStackState createState() => _CoverStackState(controller);
 }
 
 class _CoverStackState extends State<CoverStack> {
   static const double initialRotation = 0.1;
   static const double rotationDecrement = 0.08;
-  var covers = <Widget> [];
+  static const int displayLimit = 4;
 
+  void setFirst(int i) {
+    first = i;
+    createInitialState();
+  }
+  void next() {
+    setState(() {
+      first += 1;
+      createInitialState();
+    });
+  }
+
+  _CoverStackState(CoverStackController _controller) {
+    _controller.next = next;
+  }
+
+  var covers = <Widget> [];
+  var first = 0;
   void createInitialState() {
     var coversTemp = <Widget> [];
-    for (var i = 0; i < widget.tracks.length; i++) {
+    var limit;
+    if ((first + displayLimit) > widget.tracks.length) {
+      limit = widget.tracks.length;
+    } else {
+      limit = first + displayLimit;
+    }
+    print("state init "+first.toString());
+    for (var i = first; i < limit; i++) {
       var rotation = initialRotation - i * rotationDecrement;
       coversTemp.add(
         Transform.translate(
-          offset: Offset(0.0, 0.0),
+          offset: Offset(1.0*i, 0.0),
           child:
             Cover(
               rotation: rotation,
               track: widget.tracks[i],
-              brightness: 1/(2*(i)+1),
+              brightness: 1/(i+1),
             )
         )
       );
@@ -40,26 +68,24 @@ class _CoverStackState extends State<CoverStack> {
     }
     return FractionallySizedBox(
       widthFactor: 0.85,
-      child: Stack(
-        children: covers,
+      child: Padding(
+        padding: EdgeInsets.all(24.0),
+        child: Stack(
+          children: covers,
+        )
       )
     );
   }
 }
 
-class Cover extends StatefulWidget {
+class Cover extends StatelessWidget {
   final Track track;
   final double rotation;
   final brightness;
   Cover({@required this.track, @required this.rotation, this.brightness});
-  @override
-  _CoverState createState() => _CoverState();
-}
 
-class _CoverState extends State<Cover> {
-  @override
   Widget build(BuildContext context) {
-    return Transform.rotate(angle: widget.rotation,
+    return Transform.rotate(angle: rotation,
         child: AspectRatio(aspectRatio:1,
           child: DecoratedBox(
             decoration: BoxDecoration(
@@ -72,7 +98,7 @@ class _CoverState extends State<Cover> {
                 ),],
             ),
             child: ClipRRect(
-              child: imageShader(widget.track.img, widget.brightness),
+              child: imageShader(track.img, brightness),
             )
           )
         )

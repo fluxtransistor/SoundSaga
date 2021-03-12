@@ -5,21 +5,21 @@ import 'package:soundsaga/track.dart';
 
 class SingleRecordPage extends StatefulWidget {
   @override
-  _SingleRecordPageState createState() => _SingleRecordPageState();
+  SingleRecordPageState createState() => SingleRecordPageState();
 }
 
-class _SingleRecordPageState extends State<SingleRecordPage> {
-  var _tracks = [];
-  var _incomingTrack;
+class SingleRecordPageState extends State<SingleRecordPage> {
+  var tracks = <Track> [];
+  final CoverStackController stackController = CoverStackController();
   @override
   Widget build(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [
-          CoverStack(tracks: [DemoTrack1(),DemoTrack2(),DemoTrack1(),DemoTrack2(),],),
+          CoverStack(tracks: [DemoTrack1(),DemoTrack2(),DemoTrack1(),DemoTrack2(),],controller: stackController,),
           CupertinoButton.filled(
               child: Text('Swipe!',style: CupertinoTheme.of(context).textTheme.textStyle),
-              onPressed: () {},
+              onPressed: () {stackController.next();},
           )
         ]
     );
