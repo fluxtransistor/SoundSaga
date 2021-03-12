@@ -10,11 +10,18 @@ final String authHeader =
 final String userAgent =
     "SoundSaga/0.1 +http://github.com/fluxtransistor/SoundSaga";
 
-class NullTrack extends Track {
+class DemoTrack1 extends Track {
   @override
-  NullTrack() : super('');
-  String name = "Loading";
-  String artist = "Loading";
+  DemoTrack1() : super('');
+  String name = "Eclipse";
+  String artist = "Pink Floyd";
+  Image img = Image(image: AssetImage("assets/dsotm.jpg"));
+}
+class DemoTrack2 extends Track {
+  @override
+  DemoTrack2() : super('');
+  String name = "I Wish";
+  String artist = "Stevie Wonder";
   Image img = Image(image: AssetImage("assets/life.jpg"));
 }
 
@@ -27,8 +34,10 @@ class Track {
 
   Track(String idInput) {
     id = idInput;
-    name = "Loading...";
-    img = Image(image: AssetImage("assets/dsotm.jpg"));
+    if (img == null) {
+      name = "Loading...";
+      img = Image(image: AssetImage("assets/dsotm.jpg"));
+    }
     if (id != ''){
     load();
     }

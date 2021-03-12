@@ -16,7 +16,7 @@ class _SingleRecordPageState extends State<SingleRecordPage> {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [
-          CoverStack(tracks: [NullTrack()],),
+          CoverStack(tracks: [DemoTrack1(),DemoTrack2(),DemoTrack1(),DemoTrack2(),],),
           CupertinoButton.filled(
               child: Text('Swipe!',style: CupertinoTheme.of(context).textTheme.textStyle),
               onPressed: () {},
