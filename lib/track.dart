@@ -29,7 +29,9 @@ class Track {
     id = idInput;
     name = "Loading...";
     img = Image(image: AssetImage("assets/dsotm.jpg"));
+    if (id != ''){
     load();
+    }
   }
 
   void load() async {

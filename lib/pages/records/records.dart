@@ -9,14 +9,14 @@ class SingleRecordPage extends StatefulWidget {
 }
 
 class _SingleRecordPageState extends State<SingleRecordPage> {
-  var _trackStack = [];
+  var _tracks = [];
   var _incomingTrack;
   @override
   Widget build(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [
-          legacyStack(),
+          CoverStack(tracks: [NullTrack()],),
           CupertinoButton.filled(
               child: Text('Swipe!',style: CupertinoTheme.of(context).textTheme.textStyle),
               onPressed: () {},

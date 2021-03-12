@@ -2,32 +2,54 @@ import 'package:flutter/cupertino.dart';
 import 'package:soundsaga/track.dart';
 
 class CoverStack extends StatefulWidget {
+  final List<Track> tracks;
+  const CoverStack({@required this.tracks});
   @override
   _CoverStackState createState() => _CoverStackState();
 }
 
 class _CoverStackState extends State<CoverStack> {
-  var _covers = [];
+
+  var covers = <Widget> [];
+
 
   @override
+  void createInitialState() {
+    for (var i = 0; i < widget.tracks.length; i++) {
+      var rotation = -0.15 + i * 0.08;
+      covers.add(
+          Cover(
+            rotation: rotation,
+            track: widget.tracks[i],
+          )
+      );
+    }
+  }
   Widget build(BuildContext context) {
+    if (covers.length == 0) {
+      createInitialState();
+    }
     return Stack(
-      children: _covers,
+      children: covers,
     );
   }
 }
 
 class Cover extends StatefulWidget {
+  final Track track;
+  final double rotation;
+  const Cover({this.track, this.rotation,});
   @override
   _CoverState createState() => _CoverState();
 }
 
 class _CoverState extends State<Cover> {
-  final track = NullTrack();
-
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Transform.rotate(angle: widget.rotation,
+        child: AspectRatio(aspectRatio:1,
+        child: imageShader(widget.track.img))
+    );
   }
 }
 
