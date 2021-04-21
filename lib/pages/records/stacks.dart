@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/animation.dart';
 import 'package:soundsaga/track.dart';
 
 class CoverStackController {
@@ -76,16 +77,30 @@ class _CoverStackState extends State<CoverStack> {
   }
 }
 
-class Cover extends StatelessWidget {
-  final Track track;
+class Cover extends StatefulWidget {
+  var track;
   final double rotation;
   final brightness;
 
   Cover({@required this.track, @required this.rotation, this.brightness});
+  _CoverState createState() => _CoverState(this.track,this.rotation,this.brightness);
 
+}
+
+class _CoverState extends State<Cover> with SingleTickerProviderStateMixin {
+
+  _CoverState(Track track, double rotation, brightness);
+
+
+  static const double rotationDecrement = 0.08;
+  Animation<double> animation;
+  AnimationController controller;
+
+
+  @override
   Widget build(BuildContext context) {
     return Transform.rotate(
-        angle: rotation,
+        angle: rotation - animation.value,
         child: AspectRatio(
             aspectRatio: 1,
             child: DecoratedBox(
@@ -104,6 +119,21 @@ class Cover extends StatelessWidget {
                   child: imageShader(track.img, brightness),
                 ))));
   }
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    animation =
+    Tween<double>(begin: 0, end: rotationDecrement).animate(controller)
+      ..addListener(() {
+        setState(() {
+
+        });
+      });
+    controller.forward();
+  }
+}
 }
 
 ShaderMask imageShader(Image image, double brightness) {
