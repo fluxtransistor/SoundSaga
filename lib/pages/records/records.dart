@@ -8,7 +8,12 @@ class SingleRecordPage extends StatefulWidget {
 }
 
 class SingleRecordPageState extends State<SingleRecordPage> {
-  var tracks = <Track>[];
+  var tracks = [
+    DemoTrack1(),
+    DemoTrack2(),
+    DemoTrack1(),
+    DemoTrack2(),
+  ];
   var current = 0;
   final CoverStackController stackController = CoverStackController();
 
@@ -18,21 +23,34 @@ class SingleRecordPageState extends State<SingleRecordPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CoverStack(
-            tracks: [
-              DemoTrack1(),
-              DemoTrack2(),
-              DemoTrack1(),
-              DemoTrack2(),
-            ],
+            tracks: tracks,
             controller: stackController,
           ),
-          CupertinoButton.filled(
-            child: Text('Swipe!',
-                style: CupertinoTheme.of(context).textTheme.textStyle),
-            onPressed: () {
-              current += 1;
-              stackController.goto(current);
-            },
+          Text(
+            "Track Name",
+            style: CupertinoTheme.of(context).textTheme.textStyle
+          ),
+          Row(children: [
+            CupertinoButton.filled(
+              child: Text('Prev',
+                  style: CupertinoTheme.of(context).textTheme.textStyle),
+              onPressed: () {
+                if (current > 0) {
+                  current -= 1;
+                  stackController.goto(current);
+                }
+              },
+            ),
+            CupertinoButton.filled(
+              child: Text('Next',
+                  style: CupertinoTheme.of(context).textTheme.textStyle),
+              onPressed: () {
+                if (current < tracks.length - 1) {
+                  current += 1;
+                  stackController.goto(current);
+                }
+              },
+            ),]
           )
         ]);
   }

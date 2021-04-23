@@ -36,8 +36,11 @@ class _CoverStackState extends State<CoverStack> {
 
   void createInitialState() {
     var coversTemp = <Widget>[];
+    if (first >= widget.tracks.length) {
+      first = widget.tracks.length - 1;
+    }
     var limit;
-    if ((first + displayLimit) > widget.tracks.length) {
+    if ((first + displayLimit) >= widget.tracks.length) {
       limit = widget.tracks.length;
     } else {
       limit = first + displayLimit;
