@@ -43,13 +43,13 @@ class _CoverStackState extends State<CoverStack> {
       limit = first + displayLimit;
     }
     for (var i = first; i < limit; i++) {
-      var rotation = initialRotation - (i-first) * rotationDecrement;
+      var rotation = initialRotation - (i - first) * rotationDecrement;
       coversTemp.add(Transform.translate(
-          offset: Offset(1.0 * (i-first), 0.0),
+          offset: Offset(1.0 * (i - first), 0.0),
           child: Cover(
             rotation: rotation,
             track: widget.tracks[i],
-            brightness: 1 / ((i-first) + 1),
+            brightness: 1 / ((i - first) + 1),
           )));
     }
     covers = new List.from(coversTemp.reversed);
