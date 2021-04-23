@@ -9,6 +9,7 @@ class SingleRecordPage extends StatefulWidget {
 
 class SingleRecordPageState extends State<SingleRecordPage> {
   var tracks = <Track>[];
+  var current = 0;
   final CoverStackController stackController = CoverStackController();
 
   @override
@@ -29,7 +30,8 @@ class SingleRecordPageState extends State<SingleRecordPage> {
             child: Text('Swipe!',
                 style: CupertinoTheme.of(context).textTheme.textStyle),
             onPressed: () {
-              stackController.next();
+              current += 1;
+              stackController.goto(current);
             },
           )
         ]);

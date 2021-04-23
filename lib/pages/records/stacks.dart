@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:soundsaga/track.dart';
 
 class CoverStackController {
-  void Function() next;
+  void Function(int i) goto;
 }
 
 class CoverStack extends StatefulWidget {
@@ -20,20 +20,15 @@ class _CoverStackState extends State<CoverStack> {
   static const double rotationDecrement = 0.08;
   static const int displayLimit = 4;
 
-  void setFirst(int i) {
-    first = i;
-    createInitialState();
-  }
-
-  void next() {
+  void goto(int i) {
     setState(() {
-      first += 1;
+      first = i;
       createInitialState();
     });
   }
 
   _CoverStackState(CoverStackController _controller) {
-    _controller.next = next;
+    _controller.goto = goto;
   }
 
   var covers = <Widget>[];
