@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'dart:async';
 import 'package:soundsaga/pages/records/stacks.dart';
 import 'package:soundsaga/track.dart';
 
@@ -40,7 +39,7 @@ class SingleRecordPageState extends State<SingleRecordPage> with TickerProviderS
       controller =
           AnimationController(
               duration: const Duration(milliseconds: 500), vsync: this);
-      animation = CurvedAnimation(parent: controller, curve: Curves.easeInSine)
+      animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut)
         ..addListener(() {
           setState(() {
             if (forward) {
@@ -91,10 +90,9 @@ class SingleRecordPageState extends State<SingleRecordPage> with TickerProviderS
       onHorizontalDragEnd: (details) {
         if (details.primaryVelocity > 0) {
           animate(false);
-        };
-        if (details.primaryVelocity < 0) {
+        } else {
           animate(true);
-        };
+        }
       }
     );
   }

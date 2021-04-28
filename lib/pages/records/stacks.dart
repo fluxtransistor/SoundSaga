@@ -4,16 +4,14 @@ import 'package:soundsaga/track.dart';
 
 class CoverStack extends StatelessWidget {
   final tracks;
-  var position;
+
+  final position;
 
   CoverStack({@required this.tracks, @required this.position});
 
   static const double rotFirst = 0.1;
   static const double rotChange = 0.08;
   static const int dispLimit = 5;
-
-
-  var covers = <Widget>[];
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,7 @@ class CoverStack extends StatelessWidget {
       if (pos < 0) {
         brightness = 1.0;
         scale = 1 + extra;
-        yeet = 500 * extra;
+        yeet = 400 * extra;
         rotation = rotFirst + -1 * extra;
         if (pos < -0.5) {
           // opacity = (1 - (extra - 0.5) * 2);
