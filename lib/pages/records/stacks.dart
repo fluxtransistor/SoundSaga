@@ -55,7 +55,6 @@ class CoverStack extends StatelessWidget {
         )
       );
     }
-    print(position);
     return Padding(
         padding: EdgeInsets.all(24.0),
         child: Stack(

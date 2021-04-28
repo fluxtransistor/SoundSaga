@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:soundsaga/pages/records/stacks.dart';
 import 'package:soundsaga/track.dart';
@@ -87,11 +89,14 @@ class SingleRecordPageState extends State<SingleRecordPage> with TickerProviderS
     );
     return GestureDetector(
       child: ui,
-      onHorizontalDragEnd: (details) {
+      onVerticalDragEnd: (details) {
+        print(details.primaryVelocity);
         if (details.primaryVelocity > 0) {
-          animate(false);
-        } else {
-          animate(true);
+            animate(false);
+            print('back');
+        } if (details.primaryVelocity < 0) {
+            animate(true);
+            print('fwd');
         }
       }
     );
