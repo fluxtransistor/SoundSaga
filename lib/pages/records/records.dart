@@ -1,24 +1,67 @@
 import 'package:flutter/cupertino.dart';
+import 'dart:async';
 import 'package:soundsaga/pages/records/stacks.dart';
 import 'package:soundsaga/track.dart';
+
 
 class SingleRecordPage extends StatefulWidget {
   @override
   SingleRecordPageState createState() => SingleRecordPageState();
 }
 
-class SingleRecordPageState extends State<SingleRecordPage> {
+class SingleRecordPageState extends State<SingleRecordPage> with TickerProviderStateMixin {
   var tracks = [
     DemoTrack1(),
     DemoTrack2(),
     DemoTrack1(),
     DemoTrack2(),
   ];
-  int _currPos = 0;
+
+  int _currIndex = 0;
+  double _currPos = 0.0;
+
+  Animation<double> animation;
+  AnimationController controller;
+
+  void animateNext() {
+    if (_currIndex < tracks.length - 1) {
+      setState(() {
+        _currIndex += 1;
+      });
+      controller =
+          AnimationController(
+              duration: const Duration(milliseconds: 500), vsync: this);
+      animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut)
+        ..addListener(() {
+          setState(() {
+            _currPos = _currIndex - 1 + animation.value;
+          });
+        });
+      controller.forward();
+    }
+  }
+  void animatePrev() {
+    if (_currIndex > 0) {
+      setState(() {
+        _currIndex -= 1;
+      });
+      controller =
+          AnimationController(
+              duration: const Duration(milliseconds: 500), vsync: this);
+      animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut)
+        ..addListener(() {
+          setState(() {
+            _currPos = _currIndex + 1 - animation.value;
+          });
+        });
+      controller.forward();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
+
+    var ui = FractionallySizedBox(
       widthFactor: 0.87,
       child:
       Column(
@@ -26,43 +69,28 @@ class SingleRecordPageState extends State<SingleRecordPage> {
         children: <Widget>[
           CoverStack(
             tracks: tracks,
-            current: _currPos,
+            position: _currPos,
           ),
           Row(children: [
             Column(children: [
               Text(
-               tracks[_currPos].name,
+               tracks[_currIndex].name,
                 style: CupertinoTheme.of(context).textTheme.textStyle
               ),
             ]),
           ]),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            CupertinoButton.filled(
-              child: Text('Prev',
-                  style: CupertinoTheme.of(context).textTheme.textStyle),
-              onPressed: () {
-                if (_currPos > 0) {
-                  setState(() {
-                    _currPos -= 1;
-                  });
-                }
-              },
-            ),
-            CupertinoButton.filled(
-              child: Text('Next',
-                  style: CupertinoTheme.of(context).textTheme.textStyle),
-              onPressed: () {
-                if (_currPos < tracks.length - 1) {
-                  setState(() {
-                    _currPos += 1;
-                  });
-                }
-              },
-            ),]
-          )
         ])
+    );
+    return GestureDetector(
+      child: ui,
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity > 0) {
+          animateNext();
+        };
+        if (details.primaryVelocity < 0) {
+          animatePrev();
+        };
+      }
     );
   }
 }

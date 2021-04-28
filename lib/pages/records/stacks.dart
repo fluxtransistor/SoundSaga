@@ -4,47 +4,59 @@ import 'package:soundsaga/track.dart';
 
 class CoverStack extends StatelessWidget {
   final tracks;
+  var position;
 
-  var current;
+  CoverStack({@required this.tracks, @required this.position});
 
-  CoverStack({@required this.tracks, this.current});
-  static const double initialRotation = 0.1;
-  static const double rotationDecrement = 0.08;
-  static const int displayLimit = 4;
+  static const double rotFirst = 0.1;
+  static const double rotChange = 0.08;
+  static const int dispLimit = 5;
 
 
   var covers = <Widget>[];
-  var first = 0;
-
-  void createInitialState() {
-    first = current;
-    var coversTemp = <Widget>[];
-    if (first >= tracks.length) {
-      first = tracks.length - 1;
-    }
-    var limit;
-    if ((first + displayLimit) >= tracks.length) {
-      limit = tracks.length;
-    } else {
-      limit = first + displayLimit;
-    }
-    for (var i = first; i < limit; i++) {
-      var rotation = initialRotation - (i - first) * rotationDecrement;
-      coversTemp.add(Transform.translate(
-          offset: Offset(1.0 * (i - first), 0.0),
-          child: Cover(
-            rotation: rotation,
-            track: tracks[i],
-            brightness: 1 / ((i - first) + 1),
-          )));
-    }
-    covers = new List.from(coversTemp.reversed);
-  }
 
   @override
   Widget build(BuildContext context) {
-    print(current);
-    createInitialState();
+    int index = position.toInt();
+    double extra = position - index;
+
+    var coversRev = <Widget>[];
+
+    for (var i = index; (i < (index + dispLimit)) && (i < tracks.length); i++) {
+      double pos = (i - index - extra);
+      double brightness = 1 / (pos + 1);
+      double scale = 1 - (pos / 50);
+      //double opacity = 1.0;
+      double rotation = rotFirst + pos * rotChange;
+      double yeet = 0;
+      if (pos < 0) {
+        brightness = 1.0;
+        scale = 1 + extra;
+        yeet = 500 * extra;
+        rotation = rotFirst + -1 * extra;
+        if (pos < -0.5) {
+          // opacity = (1 - (extra - 0.5) * 2);
+        }
+      }
+      coversRev.add(
+        Transform.scale(
+          scale: scale,
+          child: Transform.translate(
+            offset: Offset(pos*2, 0.0 - yeet),
+            // child: Opacity(
+            //  opacity: opacity,
+              child: Cover(
+                rotation: rotation,
+                track: tracks[i],
+                brightness: brightness,
+              )
+            //)
+          )
+        )
+      );
+    }
+    covers = new List.from(coversRev.reversed);
+    print(position);
     return Padding(
         padding: EdgeInsets.all(24.0),
         child: Stack(
