@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:soundsaga/track.dart';
 
-
 class CoverStack extends StatelessWidget {
   final tracks;
 
@@ -38,28 +37,26 @@ class CoverStack extends StatelessWidget {
           // opacity = (1 - (extra - 0.5) * 2);
         }
       }
-      covers.add(
-        Transform.scale(
+      covers.add(Transform.scale(
           scale: scale,
           child: Transform.translate(
-            offset: Offset(pos*2 - yeet*0.3, 0.0 - yeet),
-            // child: Opacity(
-            //  opacity: opacity,
+              offset: Offset(pos * 2 - yeet * 0.3, 0.0 - yeet),
+              // child: Opacity(
+              //  opacity: opacity,
               child: Cover(
                 rotation: rotation,
                 track: tracks[i],
                 brightness: brightness,
               )
-            //)
-          )
-        )
-      );
+              //)
+              )));
     }
     return Padding(
         padding: EdgeInsets.all(24.0),
         child: Stack(
           children: covers,
-        ));}
+        ));
+  }
 }
 
 class Cover extends StatelessWidget {

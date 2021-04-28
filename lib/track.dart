@@ -17,6 +17,7 @@ class DemoTrack1 extends Track {
   String artist = "Pink Floyd";
   Image img = Image(image: AssetImage("assets/dsotm.jpg"));
 }
+
 class DemoTrack2 extends Track {
   @override
   DemoTrack2() : super('');
@@ -38,8 +39,8 @@ class Track {
       name = "Loading...";
       img = Image(image: AssetImage("assets/dsotm.jpg"));
     }
-    if (id != ''){
-    load();
+    if (id != '') {
+      load();
     }
   }
 

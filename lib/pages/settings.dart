@@ -4,7 +4,8 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Settings',style: CupertinoTheme.of(context).textTheme.textStyle),
+      child: Text('Settings',
+          style: CupertinoTheme.of(context).textTheme.textStyle),
     );
   }
 }
