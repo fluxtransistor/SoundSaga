@@ -14,44 +14,59 @@ class SingleRecordPageState extends State<SingleRecordPage> {
     DemoTrack1(),
     DemoTrack2(),
   ];
-  var current = 0;
+  int _currPos = 0;
+  Track _currTrack;
   final CoverStackController stackController = CoverStackController();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    _currTrack = tracks[_currPos];
+    return FractionallySizedBox(
+      widthFactor: 0.87,
+      child:
+      Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           CoverStack(
             tracks: tracks,
-            controller: stackController,
-          ),
-          Text(
-            "Track Name",
-            style: CupertinoTheme.of(context).textTheme.textStyle
+            current: _currPos,
           ),
           Row(children: [
+            Column(children: [
+              Text(
+               _currTrack.name,
+                style: CupertinoTheme.of(context).textTheme.textStyle
+              ),
+            ]),
+          ]),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
             CupertinoButton.filled(
               child: Text('Prev',
                   style: CupertinoTheme.of(context).textTheme.textStyle),
               onPressed: () {
-                if (current > 0) {
-                  current -= 1;
-                  stackController.goto(current);
+                if (_currPos > 0) {
+                  _currPos -= 1;
                 }
+                setState(() {
+                  _currTrack = tracks[_currPos];
+                });
               },
             ),
             CupertinoButton.filled(
               child: Text('Next',
                   style: CupertinoTheme.of(context).textTheme.textStyle),
               onPressed: () {
-                if (current < tracks.length - 1) {
-                  current += 1;
-                  stackController.goto(current);
+                if (_currPos < tracks.length - 1) {
+                  setState(() {
+                    _currPos += 1;
+                  });
                 }
               },
             ),]
           )
-        ]);
+        ])
+    );
   }
 }

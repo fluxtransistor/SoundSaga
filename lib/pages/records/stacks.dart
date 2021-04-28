@@ -7,18 +7,20 @@ class CoverStackController {
 
 class CoverStack extends StatefulWidget {
   final tracks;
-  final CoverStackController controller;
 
-  CoverStack({@required this.tracks, this.controller});
+  final current;
+
+  CoverStack({@required this.tracks, this.current});
 
   @override
-  _CoverStackState createState() => _CoverStackState(controller);
+  _CoverStackState createState() => _CoverStackState(current);
 }
 
 class _CoverStackState extends State<CoverStack> {
   static const double initialRotation = 0.1;
   static const double rotationDecrement = 0.08;
   static const int displayLimit = 4;
+  var _current;
 
   void goto(int i) {
     setState(() {
@@ -27,14 +29,15 @@ class _CoverStackState extends State<CoverStack> {
     });
   }
 
-  _CoverStackState(CoverStackController _controller) {
-    _controller.goto = goto;
+  _CoverStackState(int _current_t) {
+    _current = _current_t;
   }
 
   var covers = <Widget>[];
   var first = 0;
 
   void createInitialState() {
+    first = _current;
     var coversTemp = <Widget>[];
     if (first >= widget.tracks.length) {
       first = widget.tracks.length - 1;
@@ -60,17 +63,12 @@ class _CoverStackState extends State<CoverStack> {
 
   @override
   Widget build(BuildContext context) {
-    if (covers.length == 0) {
-      createInitialState();
-    }
-    return FractionallySizedBox(
-        widthFactor: 0.85,
-        child: Padding(
-            padding: EdgeInsets.all(24.0),
-            child: Stack(
-              children: covers,
-            )));
-  }
+    createInitialState();
+    return Padding(
+        padding: EdgeInsets.all(24.0),
+        child: Stack(
+          children: covers,
+        ));}
 }
 
 class Cover extends StatelessWidget {
