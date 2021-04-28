@@ -15,12 +15,9 @@ class SingleRecordPageState extends State<SingleRecordPage> {
     DemoTrack2(),
   ];
   int _currPos = 0;
-  Track _currTrack;
-  final CoverStackController stackController = CoverStackController();
 
   @override
   Widget build(BuildContext context) {
-    _currTrack = tracks[_currPos];
     return FractionallySizedBox(
       widthFactor: 0.87,
       child:
@@ -34,7 +31,7 @@ class SingleRecordPageState extends State<SingleRecordPage> {
           Row(children: [
             Column(children: [
               Text(
-               _currTrack.name,
+               tracks[_currPos].name,
                 style: CupertinoTheme.of(context).textTheme.textStyle
               ),
             ]),
@@ -47,11 +44,10 @@ class SingleRecordPageState extends State<SingleRecordPage> {
                   style: CupertinoTheme.of(context).textTheme.textStyle),
               onPressed: () {
                 if (_currPos > 0) {
-                  _currPos -= 1;
+                  setState(() {
+                    _currPos -= 1;
+                  });
                 }
-                setState(() {
-                  _currTrack = tracks[_currPos];
-                });
               },
             ),
             CupertinoButton.filled(

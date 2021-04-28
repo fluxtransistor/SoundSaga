@@ -1,50 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:soundsaga/track.dart';
 
-class CoverStackController {
-  void Function(int i) goto;
-}
 
-class CoverStack extends StatefulWidget {
+class CoverStack extends StatelessWidget {
   final tracks;
 
-  final current;
+  var current;
 
   CoverStack({@required this.tracks, this.current});
-
-  @override
-  _CoverStackState createState() => _CoverStackState(current);
-}
-
-class _CoverStackState extends State<CoverStack> {
   static const double initialRotation = 0.1;
   static const double rotationDecrement = 0.08;
   static const int displayLimit = 4;
-  var _current;
 
-  void goto(int i) {
-    setState(() {
-      first = i;
-      createInitialState();
-    });
-  }
-
-  _CoverStackState(int _current_t) {
-    _current = _current_t;
-  }
 
   var covers = <Widget>[];
   var first = 0;
 
   void createInitialState() {
-    first = _current;
+    first = current;
     var coversTemp = <Widget>[];
-    if (first >= widget.tracks.length) {
-      first = widget.tracks.length - 1;
+    if (first >= tracks.length) {
+      first = tracks.length - 1;
     }
     var limit;
-    if ((first + displayLimit) >= widget.tracks.length) {
-      limit = widget.tracks.length;
+    if ((first + displayLimit) >= tracks.length) {
+      limit = tracks.length;
     } else {
       limit = first + displayLimit;
     }
@@ -54,7 +34,7 @@ class _CoverStackState extends State<CoverStack> {
           offset: Offset(1.0 * (i - first), 0.0),
           child: Cover(
             rotation: rotation,
-            track: widget.tracks[i],
+            track: tracks[i],
             brightness: 1 / ((i - first) + 1),
           )));
     }
@@ -63,6 +43,7 @@ class _CoverStackState extends State<CoverStack> {
 
   @override
   Widget build(BuildContext context) {
+    print(current);
     createInitialState();
     return Padding(
         padding: EdgeInsets.all(24.0),
