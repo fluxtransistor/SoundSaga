@@ -19,42 +19,47 @@ class SingleRecordPageState extends State<SingleRecordPage> with TickerProviderS
 
   int _currIndex = 0;
   double _currPos = 0.0;
+  bool animating = false;
 
   Animation<double> animation;
   AnimationController controller;
 
-  void animateNext() {
-    if (_currIndex < tracks.length - 1) {
+  void animate(bool forward) {
+    if (!animating && ((forward && _currIndex < tracks.length - 1)
+        || (!forward && _currIndex > 0))) {
       setState(() {
-        _currIndex += 1;
+        if (forward) {
+          _currIndex += 1;
+          _currPos = _currIndex - 1.0;
+        } else {
+          _currIndex -= 1;
+          _currPos = _currIndex + 0.0;
+        }
       });
+      animating = true;
       controller =
           AnimationController(
               duration: const Duration(milliseconds: 500), vsync: this);
-      animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut)
+      animation = CurvedAnimation(parent: controller, curve: Curves.easeInSine)
         ..addListener(() {
           setState(() {
-            _currPos = _currIndex - 1 + animation.value;
+            if (forward) {
+              _currPos = _currIndex - 1.0 + animation.value;
+            } else {
+              _currPos = _currIndex + animation.value;
+            }
           });
+        })
+        ..addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            animating = false;
+          }
         });
-      controller.forward();
-    }
-  }
-  void animatePrev() {
-    if (_currIndex > 0) {
-      setState(() {
-        _currIndex -= 1;
-      });
-      controller =
-          AnimationController(
-              duration: const Duration(milliseconds: 500), vsync: this);
-      animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut)
-        ..addListener(() {
-          setState(() {
-            _currPos = _currIndex + 1 - animation.value;
-          });
-        });
-      controller.forward();
+      if (forward) {
+        controller.forward(from: 0.0);
+      } else {
+        controller.reverse(from: 1.0);
+      }
     }
   }
 
@@ -85,10 +90,10 @@ class SingleRecordPageState extends State<SingleRecordPage> with TickerProviderS
       child: ui,
       onHorizontalDragEnd: (details) {
         if (details.primaryVelocity > 0) {
-          animateNext();
+          animate(false);
         };
         if (details.primaryVelocity < 0) {
-          animatePrev();
+          animate(true);
         };
       }
     );

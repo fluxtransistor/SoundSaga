@@ -19,10 +19,12 @@ class CoverStack extends StatelessWidget {
   Widget build(BuildContext context) {
     int index = position.toInt();
     double extra = position - index;
-
-    var coversRev = <Widget>[];
-
-    for (var i = index; (i < (index + dispLimit)) && (i < tracks.length); i++) {
+    int last = index + dispLimit - 1;
+    if (index + dispLimit > tracks.length) {
+      last = tracks.length - 1;
+    }
+    var covers = <Widget>[];
+    for (var i = last; i >= index; i--) {
       double pos = (i - index - extra);
       double brightness = 1 / (pos + 1);
       double scale = 1 - (pos / 50);
@@ -38,11 +40,11 @@ class CoverStack extends StatelessWidget {
           // opacity = (1 - (extra - 0.5) * 2);
         }
       }
-      coversRev.add(
+      covers.add(
         Transform.scale(
           scale: scale,
           child: Transform.translate(
-            offset: Offset(pos*2, 0.0 - yeet),
+            offset: Offset(pos*2 - yeet*0.3, 0.0 - yeet),
             // child: Opacity(
             //  opacity: opacity,
               child: Cover(
@@ -55,7 +57,6 @@ class CoverStack extends StatelessWidget {
         )
       );
     }
-    covers = new List.from(coversRev.reversed);
     print(position);
     return Padding(
         padding: EdgeInsets.all(24.0),
