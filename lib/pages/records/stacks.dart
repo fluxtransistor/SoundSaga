@@ -10,14 +10,14 @@ class CoverStack extends StatelessWidget {
 
   static const double rotFirst = 0.1;
   static const double rotChange = 0.08;
-  static const int dispLimit = 5;
+  static const int displayLimit = 5;
 
   @override
   Widget build(BuildContext context) {
     int index = position.toInt();
     double extra = position - index;
-    int last = index + dispLimit - 1;
-    if (index + dispLimit > tracks.length) {
+    int last = index + displayLimit - 1;
+    if (index + displayLimit > tracks.length) {
       last = tracks.length - 1;
     }
     var covers = <Widget>[];
@@ -28,15 +28,18 @@ class CoverStack extends StatelessWidget {
       //double opacity = 1.0;
       double rotation = rotFirst + pos * rotChange;
       double yeet = 0;
+      double spread = 1;
       if (pos < 0) {
         brightness = 1.0;
         scale = 1 + extra;
         yeet = 400 * extra;
         rotation = rotFirst + -1 * extra;
+        spread = 1 + 10 * extra;
         if (pos < -0.5) {
           // opacity = (1 - (extra - 0.5) * 2);
         }
       }
+      double blur = 8 * spread;
       covers.add(Transform.scale(
           scale: scale,
           child: Transform.translate(
@@ -47,6 +50,8 @@ class CoverStack extends StatelessWidget {
                 rotation: rotation,
                 track: tracks[i],
                 brightness: brightness,
+                blurSpread: spread,
+                blurRadius: blur,
               )
               //)
               )));
@@ -63,8 +68,10 @@ class Cover extends StatelessWidget {
   final Track track;
   final double rotation;
   final brightness;
+  final blurRadius;
+  final blurSpread;
 
-  Cover({@required this.track, @required this.rotation, this.brightness});
+  Cover({@required this.track, @required this.rotation, @required this.brightness, @required this.blurRadius, @required this.blurSpread});
 
   Widget build(BuildContext context) {
     return Transform.rotate(
@@ -77,14 +84,15 @@ class Cover extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.50),
-                      spreadRadius: 1,
-                      blurRadius: 8,
+                      spreadRadius: this.blurSpread,
+                      blurRadius: this.blurRadius,
                       offset: Offset(0, 0), // changes position of shadow
                     ),
                   ],
                 ),
                 child: ClipRRect(
                   child: imageShader(track.img, brightness),
+                  //child: track.img
                 ))));
   }
 }
