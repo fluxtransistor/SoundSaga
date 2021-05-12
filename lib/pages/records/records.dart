@@ -74,9 +74,16 @@ class SingleRecordPageState extends State<SingleRecordPage>
                 position: _currPos,
               ),
               Row(children: [
-                Column(children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                   Text(tracks[_currIndex].name,
                       style: CupertinoTheme.of(context).textTheme.textStyle),
+                  Text(tracks[_currIndex].artist,
+                      style: CupertinoTheme.of(context).textTheme.textStyle.apply(
+                        fontSizeFactor: 3,
+                        color: CupertinoColors.activeOrange,
+                        fontWeightDelta: 0,
+                      )),
                 ]),
               ]),
             ]));

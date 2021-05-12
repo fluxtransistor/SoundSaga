@@ -32,6 +32,7 @@ class Track {
   String name;
   String id;
   Image img;
+  String artist;
 
   Track(String idInput) {
     id = idInput;
