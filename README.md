@@ -4,4 +4,6 @@ A little app in Flutter that allows you to discover music made exactly 10, 20, 3
 
 ## Current state
 
-Currently, the app displays a slightly broken 'stack' of album covers. First, I will implement some sort of switching between tracks with gestures and animations. Then, I will link it to real Billboard data (which has been scraped already). Finally, I will add a list view, links to music providers, and single/album information.
+Currently, the app displays a 'stack' of dummy album covers and basic metadata. I plan to polish the UI on this page and link it to real Billboard data (which has been scraped already).
+
+Finally, I will add a list view, links to music providers, and single/album information.
